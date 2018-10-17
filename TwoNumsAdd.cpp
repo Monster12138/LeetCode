@@ -10,7 +10,7 @@ struct ListNode {
 class Solution {
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        ListNode *res,*cur;
+/*      ListNode *res,*cur;
         cur = res = (ListNode*)malloc(sizeof(ListNode));
 
         if(l1 == NULL && l2 == NULL)return NULL;
@@ -53,7 +53,15 @@ public:
             }
         }
         return res->next;
-        
+        */
+        ListNode *res, *cur;
+        res = cur = (ListNode*)malloc(sizeof(ListNode));
+        res->next = NULL;
+        int carry = 0;
+
+        while(!l1 || !l2){
+            
+        }
     }
 };
 
