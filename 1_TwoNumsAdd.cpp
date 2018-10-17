@@ -58,10 +58,29 @@ public:
         res = cur = (ListNode*)malloc(sizeof(ListNode));
         res->next = NULL;
         int carry = 0;
-
+        
         while(!l1 || !l2){
-            
+            printf("!\n");
+            int x1 = l1?l1->val:0;
+            int x2 = l2?l2->val:0;
+
+            cur->next = (ListNode*)malloc(sizeof(ListNode));
+            if(cur->next)cur->next->next = NULL;
+
+            cur->next->val = x1 + x2 + carry;
+            if(cur->next->val > 9){
+                carry = 1;
+                cur->next->val %= cur->next->val;
+            }else{
+                carry = 0;
+            }
+
+            cur = cur->next;
+            if(l1)l1 = l1->next;
+            if(l2)l2 = l2->next;
         }
+        
+        return res->next;
     }
 };
 
@@ -75,10 +94,10 @@ int main()
     ListNode n6(9);
 
     n1.next = &n2;
-//    n2.next = &n3;
+    n2.next = &n3;
 
-//    n4.next = &n5;
-//    n5.next = &n6;
+    n4.next = &n5;
+    n5.next = &n6;
 
     Solution s;
 
