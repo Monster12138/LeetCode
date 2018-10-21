@@ -5,75 +5,93 @@ using namespace std;
 
 class Solution {
 public:
-    bool Cmp(string str, string substr)
+    bool Is_SubString(string str)
     {
-        char str1[1000];
-        char str2[1000];
+        int i = 0;
+        int length = str.size() - 1;
+        while(i < length)
+        {
+            if(str[i] != str[length])return false;
+            i++;
+            length--;
+        }
 
-        strcpy(str1,str.c_str());
-        strcpy(str2,substr.c_str());
-        if(strstr(str1,str2)!=NULL)return true;
-        else return false;
+        return true;
     }
 
-    string Reverse(string str)
+
+    string Cut(const char *str, int n)
     {
-        unsigned int length = str.size();
-        string res(str);
-        for(unsigned int i = 0 ;i < str.size();i++, length--)
+        string tmp = "";
+        for(int i = 0;i < n; i++)
         {
-            res[i] = str[length - 1];
+            tmp += str[i];
         }
-        return res;
+
+        return tmp;
+    }
+
+/*    string longestPalindrome(string s) {
+        unsigned int slength = s.size();
+        if(slength <= 1)return s;
+
+        unsigned int n = slength;
+        while(n > 0)
+        {
+            for(unsigned int i = 0; i + n <= slength; i++){
+                string str1 = Cut(s.c_str()+i, n);
+                if(Is_SubString(str1)){
+                    return str1;
+                }
+            }
+            n--;
+        }
+        s = Cut(s.c_str(),1);
+       return s;
+    }*/
+
+    string GetSubString(string s, unsigned int left, unsigned int& index)
+    {
+        string tmp("");
+        unsigned int i;
+        for(i = left;i>=0 && s[i] == s[i+index];i--){
+            index += 2;
+        }
+
+        for(unsigned int j = 0; j <= index; j++)
+        {
+            tmp += s[++i];
+        }
+
+        return tmp;
     }
 
     string longestPalindrome(string s) {
         unsigned int slength = s.size();
         if(slength <= 1)return s;
-/*        do{
-            string SubString(s);
-            SubString = Reverse(SubString);
-            unsigned int Sublength = SubString.size();
-            while(--Sublength){
-                SubString.pop_back();
-                if(Cmp(s,SubString))return SubString;
+
+        string MaxSubString("");
+        for(unsigned int i = 0; i + 2< slength; i++){
+            if(s[i] == s[i+2]){
+                unsigned int index = 2;
+                string tmp = GetSubString(s, i, index);
+                if(MaxSubString.size() < tmp.size()){
+                    MaxSubString = tmp;
+                }
             }
-            for(unsigned int i = 0;i < slength - 1; i++){
-                s[i] = s[i+1];
-            }
-            s.pop_back();
-            slength--;
         }
-        */ 
-        string SubString(s);
-        string tmp2(s);
-        unsigned int tlength = tmp2.size();
-        while(--tlength)
-        { 
-            cout<<"tmp2:>"<<tmp2<<endl;
-            slength = tmp2.size();
-            string tmp1(tmp2);
-            while(--slength > 1){
-                SubString = tmp1;
-                SubString.pop_back();
-                tmp1.pop_back();
-                SubString = Reverse(SubString);
-                cout<<SubString<<endl;
-                if(Cmp(s,SubString))return SubString;
-            }
-            for(unsigned int i = 0;i < slength - 1; i++){
-                tmp2[i] = tmp2[i+1];
-            }
-            tmp2.pop_back();
+        if(MaxSubString == ""){
+
         }
-        return 0;
+        return MaxSubString;
     }
+
 };
 
 int main()
 {
     Solution s;
-    string str("cbbd");
+    string str("ibvjkmpyzsifuxcabqqpahjdeuzaybqsrsmbfplxycsafogotliyvhxjtkrbzqxlyfwujzhkdafhebvsdhkkdbhlhmaoxmbkqiwiusngkbdhlvxdyvnjrzvxmukvdfobzlmvnbnilnsyrgoygfdzjlymhprcpxsnxpcafctikxxybcusgjwmfklkffehbvlhvxfiddznwumxosomfbgxoruoqrhezgsgidgcfzbtdftjxeahriirqgxbhicoxavquhbkaomrroghdnfkknyigsluqebaqrtcwgmlnvmxoagisdmsokeznjsnwpxygjjptvyjjkbmkxvlivinmpnpxgmmorkasebngirckqcawgevljplkkgextudqaodwqmfljljhrujoerycoojwwgtklypicgkyaboqjfivbeqdlonxeidgxsyzugkntoevwfuxovazcyayvwbcqswzhytlmtmrtwpikgacnpkbwgfmpavzyjoxughwhvlsxsgttbcyrlkaarngeoaldsdtjncivhcfsaohmdhgbwkuemcembmlwbwquxfaiukoqvzmgoeppieztdacvwngbkcxknbytvztodbfnjhbtwpjlzuajnlzfmmujhcggpdcwdquutdiubgcvnxvgspmfumeqrofewynizvynavjzkbpkuxxvkjujectdyfwygnfsukvzflcuxxzvxzravzznpxttduajhbsyiywpqunnarabcroljwcbdydagachbobkcvudkoddldaucwruobfylfhyvjuynjrosxczgjwudpxaqwnboxgxybnngxxhibesiaxkicinikzzmonftqkcudlzfzutplbycejmkpxcygsafzkgudy");
     string res = s.longestPalindrome(str);
     cout<< res <<endl;
     return 0;
