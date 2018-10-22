@@ -5,7 +5,7 @@ using namespace std;
 
 class Solution {
 public:
-    bool Is_SubString(string str)
+/*    bool Is_SubString(string str)
     {
         int i = 0;
         int length = str.size() - 1;
@@ -31,7 +31,7 @@ public:
         return tmp;
     }
 
-/*    string longestPalindrome(string s) {
+    string longestPalindrome(string s) {
         unsigned int slength = s.size();
         if(slength <= 1)return s;
 
@@ -53,12 +53,12 @@ public:
     string GetSubString(string s, unsigned int left, unsigned int& index)
     {
         string tmp("");
-        unsigned int i;
-        for(i = left;i>=0 && s[i] == s[i+index];i--){
+        int i;
+        for(i = left;i>=0 && i+index < s.size() &&s[i] == s[i+index];i--){
             index += 2;
         }
-
-        for(unsigned int j = 0; j <= index; j++)
+        
+        for(unsigned int j = 0; j <= index - 2; j++)
         {
             tmp += s[++i];
         }
@@ -71,6 +71,15 @@ public:
         if(slength <= 1)return s;
 
         string MaxSubString("");
+        for(unsigned int i = 0; i + 1< slength; i++){
+            if(s[i] == s[i+1]){
+                unsigned int index = 1;
+                string tmp = GetSubString(s, i, index);
+                if(MaxSubString.size() < tmp.size()){
+                    MaxSubString = tmp;
+                }
+            }
+        }
         for(unsigned int i = 0; i + 2< slength; i++){
             if(s[i] == s[i+2]){
                 unsigned int index = 2;
@@ -80,9 +89,7 @@ public:
                 }
             }
         }
-        if(MaxSubString == ""){
-
-        }
+        if(MaxSubString == "")MaxSubString += s[0];
         return MaxSubString;
     }
 
@@ -91,7 +98,8 @@ public:
 int main()
 {
     Solution s;
-    string str("ibvjkmpyzsifuxcabqqpahjdeuzaybqsrsmbfplxycsafogotliyvhxjtkrbzqxlyfwujzhkdafhebvsdhkkdbhlhmaoxmbkqiwiusngkbdhlvxdyvnjrzvxmukvdfobzlmvnbnilnsyrgoygfdzjlymhprcpxsnxpcafctikxxybcusgjwmfklkffehbvlhvxfiddznwumxosomfbgxoruoqrhezgsgidgcfzbtdftjxeahriirqgxbhicoxavquhbkaomrroghdnfkknyigsluqebaqrtcwgmlnvmxoagisdmsokeznjsnwpxygjjptvyjjkbmkxvlivinmpnpxgmmorkasebngirckqcawgevljplkkgextudqaodwqmfljljhrujoerycoojwwgtklypicgkyaboqjfivbeqdlonxeidgxsyzugkntoevwfuxovazcyayvwbcqswzhytlmtmrtwpikgacnpkbwgfmpavzyjoxughwhvlsxsgttbcyrlkaarngeoaldsdtjncivhcfsaohmdhgbwkuemcembmlwbwquxfaiukoqvzmgoeppieztdacvwngbkcxknbytvztodbfnjhbtwpjlzuajnlzfmmujhcggpdcwdquutdiubgcvnxvgspmfumeqrofewynizvynavjzkbpkuxxvkjujectdyfwygnfsukvzflcuxxzvxzravzznpxttduajhbsyiywpqunnarabcroljwcbdydagachbobkcvudkoddldaucwruobfylfhyvjuynjrosxczgjwudpxaqwnboxgxybnngxxhibesiaxkicinikzzmonftqkcudlzfzutplbycejmkpxcygsafzkgudy");
+ //   string str("ibvjkmpyzsifuxcabqqpahjdeuzaybqsrsmbfplxycsafogotliyvhxjtkrbzqxlyfwujzhkdafhebvsdhkkdbhlhmaoxmbkqiwiusngkbdhlvxdyvnjrzvxmukvdfobzlmvnbnilnsyrgoygfdzjlymhprcpxsnxpcafctikxxybcusgjwmfklkffehbvlhvxfiddznwumxosomfbgxoruoqrhezgsgidgcfzbtdftjxeahriirqgxbhicoxavquhbkaomrroghdnfkknyigsluqebaqrtcwgmlnvmxoagisdmsokeznjsnwpxygjjptvyjjkbmkxvlivinmpnpxgmmorkasebngirckqcawgevljplkkgextudqaodwqmfljljhrujoerycoojwwgtklypicgkyaboqjfivbeqdlonxeidgxsyzugkntoevwfuxovazcyayvwbcqswzhytlmtmrtwpikgacnpkbwgfmpavzyjoxughwhvlsxsgttbcyrlkaarngeoaldsdtjncivhcfsaohmdhgbwkuemcembmlwbwquxfaiukoqvzmgoeppieztdacvwngbkcxknbytvztodbfnjhbtwpjlzuajnlzfmmujhcggpdcwdquutdiubgcvnxvgspmfumeqrofewynizvynavjzkbpkuxxvkjujectdyfwygnfsukvzflcuxxzvxzravzznpxttduajhbsyiywpqunnarabcroljwcbdydagachbobkcvudkoddldaucwruobfylfhyvjuynjrosxczgjwudpxaqwnboxgxybnngxxhibesiaxkicinikzzmonftqkcudlzfzutplbycejmkpxcygsafzkgudy");
+    string str("aaaa");
     string res = s.longestPalindrome(str);
     cout<< res <<endl;
     return 0;
