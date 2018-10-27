@@ -5,11 +5,11 @@ using namespace std;
 
 class Solution {
 public:
-
+/*
     bool isSame(const vector<int>& v1, const vector<int>& v2){
-        unsigned int i = 0;
-        if(v1.size() != v2.size())return false;
+        if(v1[0] == v2[0] && v1[1] == v2[1] && v1[2] == v2[2])return true;
 
+        return false;
         while(i<v1.size()){
             if(v1[i] != v2[i])return false;
             ++i;
@@ -17,12 +17,12 @@ public:
 
         return true;
     }
-
+*/
 
     bool ainb(const vector<vector<int>>& b,const vector<int>& a){
         unsigned int i = 0;
         while( i < b.size() ){
-            if(isSame(b[i], a))return true;
+            if(b[i][0] == a[0] && b[i][1] == a[1] && b[i][2] == a[2])return true;
             ++i;
         }
 
@@ -30,11 +30,10 @@ public:
     }
 
     vector<vector<int>> threeSum(vector<int>& nums) {
-        unsigned int i = 0;
         vector<vector<int>> res;
         if(nums.size() < 3)return res;
         sort(nums.begin(), nums.end());
-        while(i < nums.size() - 2){
+/*      while(i < nums.size() - 2){
             if(i != 0 && nums[i] == nums[i-1]){
                 ++i;
                 continue;
@@ -59,7 +58,22 @@ public:
             }
             ++i;
         }
-
+*/
+        for(unsigned int i = 0; i <nums.size(); ++i){
+            int left = i + 1, right = nums.size() - 1;
+            if( i > 0 && nums[i] == nums[i-1] )continue;
+            while(left < right){
+                if(nums[left] + nums[right] == -nums[i]){
+                    res.push_back({nums[i], nums[left], nums[right]});
+                    while( left < right && nums[left] == nums[left+1] )++left;
+                    while( left < right && nums[right] == nums[right - 1] )--right;
+                    ++left;
+                    --right;
+                }
+                else if(nums[left] + nums[right] > -nums[i])right--;
+                else left++;
+            }
+        }
         return res;
     }
 };
