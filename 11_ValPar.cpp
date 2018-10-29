@@ -6,31 +6,20 @@ using namespace std;
 class Solution {
 public:
     bool isValid(string s) {
+        if(s.size()%2 != 0)return false;
         stack<char> cs;
         unsigned int i = 0;
         while( i < s.size() ){
-            if(s[i] == '(' || s[i] == '{' || s[i] == '['){
-                cs.push(s[i]);
-                ++i;
+            if(s[i] == '(')cs.push(')');
+            else if(s[i] == '{')cs.push('}');
+            else if(s[i] == '[')cs.push(']');
+            else {
+                if(cs.empty() || cs.top() != s[i])return false;
+                else cs.pop();
             }
-            else if(s[i] == ')' || s[i] == '}' || s[i] == ']'){
-                if(cs.empty())return false;
-                if(s[i] == ')'){
-                    if(cs.top() != '(')return false;
-                }
-                else if(s[i] == '}'){
-                    if(cs.top() != '{')return false;
-                }
-                else {
-                    if(s[i] == ']'){
-                        if(cs.top() != '[')return false;
-                    }
-                }
-                cs.pop();
-                ++i;
-            }
-        }
 
+            ++i;
+        }
         if(cs.empty())return true;
         return false;
     }
@@ -39,7 +28,7 @@ public:
 int main()
 {
     Solution s;
-    cout << s.isValid("[");
+    cout << s.isValid("]");
     return 0;
 }
 
