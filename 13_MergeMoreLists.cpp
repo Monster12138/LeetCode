@@ -11,17 +11,49 @@ struct ListNode {
 
 class Solution {
 public:
-    bool allNull(const vector<ListNode*>& lists){
-        for(unsigned int i = 0; i < lists.size(); ++i){
-            if(lists[i] != nullptr)return false;
+    ListNode* mergeTwoLists(ListNode *l1,ListNode *l2){
+       if(l1 == nullptr || l2 == nullptr)return l1?l1:l2;
+       ListNode* res = l1, *last = nullptr;
+       while(res && l2){
+           if(res->val <= l2->val){
+               last = res;
+               res = res->next;
+               continue;
+           }
+           else{
+               ListNode* tmp = l2;
+               l2 = l2->next;
+               if(last == nullptr){
+                   tmp->next = res;
+                   l1 = tmp;
+                   last = tmp;
+               }
+               else {
+                   tmp->next = res;
+                   last = last->next = tmp;
+               }
+           }
+       }
+       if(l2 != nullptr)last->next = l2;
+       return l1;
+    }
+
+    ListNode* recursion(vector<ListNode*>& lists,int left, int right){
+        if(left > right)return nullptr;
+        else if(left == right)return lists[left];
+        else if(left == right - 1)return mergeTwoLists(lists[left], lists[right]);
+        else {
+            int mid = (left + right)/2;
+            ListNode* pleft = recursion(lists, left, mid);
+            ListNode* pright = recursion(lists, mid + 1,right);
+            return mergeTwoLists(pleft, pright);
         }
-        return true;
     }
 
     ListNode* mergeKLists(vector<ListNode*>& lists) {
-        ListNode *res,*cur;
+/*        ListNode *res,*cur;
         res = cur = new ListNode(-1);
-        while(!allNull(lists)){
+        while(1){
             ListNode* minpNode = nullptr;
             int min  = INT32_MAX, minIndex = 0;
             for(unsigned int i = 0; i < lists.size(); ++i){
@@ -31,11 +63,15 @@ public:
                     minIndex = i;
                 }
             }
+            if(minpNode == nullptr)break;
             lists[minIndex] = lists[minIndex]->next;
-            cur->next = new ListNode(minpNode->val);
+            cur->next = minpNode;
             cur = cur->next;
         }
         return res->next;
+*/
+        int left = 0,right = lists.size() - 1;
+        return  recursion(lists, left, right); 
     }
 };
 
