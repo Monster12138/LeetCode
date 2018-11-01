@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 class Solution {
@@ -34,6 +35,8 @@ public:
         }
         return i+1;
 */
+        if(nums.empty())return 0;
+        return std::distance(nums.begin(),unique(nums.begin(),nums.end()));
     }
 };
 
