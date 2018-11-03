@@ -37,11 +37,10 @@ public:
         vector<string> vString;
         for(unsigned int i = 0; i < num2.size(); ++i){
             vString.push_back(multChar(num1, num2[i], num2.size() - i - 1));
-            cout << vString[i] << endl;
         }
         
         int carry = 0;
-        for(unsigned int i = 0; i < vString[vString.size() - 1].size(); ++i)
+        for(unsigned int i = 0; i < vString[0].size(); ++i)
         {
             int sum = 0;
             for(unsigned int j = 0; j < vString.size(); ++j){
