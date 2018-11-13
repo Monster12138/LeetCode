@@ -20,8 +20,6 @@ public:
             res.push_back(vec);            
         }
         
-        
-        int t = 1;
         while(1){
             tmp = tmp2;
             tmp2.clear();
@@ -30,18 +28,6 @@ public:
             for(unsigned int i = 0; i < tmp.size(); ++i){
                 for(unsigned int j = vec2[i] + 1; j < nums.size(); ++j){
                     vec = tmp[i];
-                   /* bool flag = true;
-                    for(unsigned int h = 0; h < vec.size(); ++h){
-                        if(vec[h] == nums[j]){
-                            flag = false;
-                            break;
-                        }
-                    }
-                    if(flag)
-                        vec.push_back(nums[j]);
-                    else 
-                        continue;
-                        */
                     vec.push_back(nums[j]);
                     vec3.push_back(j);
                     tmp2.push_back(vec);
@@ -52,7 +38,6 @@ public:
                     cout << endl;
                 }
             }
-            ++t;
             if(vec.size() == nums.size())break;
         }
         return res;
