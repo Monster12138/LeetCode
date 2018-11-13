@@ -10,14 +10,16 @@ public:
         vector<int> vec;
         vector<int> vec3;
         vector<int> vec2;
+        res.push_back(vec);
         if(nums.empty())return res;
         for(unsigned int j = 0; j < nums.size(); ++j){
             vec.clear();
-            vec3.clear();
             vec.push_back(nums[j]);
             vec3.push_back(j);
             tmp2.push_back(vec);
+            res.push_back(vec);            
         }
+        
         
         int t = 1;
         while(1){
@@ -60,7 +62,7 @@ public:
 int main()
 {
     Solution s;
-    vector<int> vec = {1,2,3,4};
+    vector<int> vec = {1,2,3};
     s.subsets(vec);
     return 0;
 }
