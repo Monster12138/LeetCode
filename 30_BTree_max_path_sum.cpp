@@ -11,14 +11,20 @@ struct TreeNode {
 
 class Solution {
 public:
+    int maxPathhelper(TreeNode* root, int& max_sum){
+        if(root == NULL)return 0;
+        int left_sum = maxPathhelper(root->left, max_sum);
+        int right_sum = maxPathhelper(root->right, max_sum);
+        max_sum = max(max(0,left_sum) + max(0, right_sum) + root->val, max_sum);
+
+        return max(max(left_sum, right_sum) + root->val, 0);
+    }
+
     int maxPathSum(TreeNode* root) {
         if(root == NULL)return 0;
-        int max = root->val;
-        int leftnum = maxPathSum(root->left);
-        int rightnum = maxPathSum(root->right);
-        if(leftnum > rightnum && leftnum > 0)return max + leftnum;
-        if(leftnum < rightnum && rightnum > 0)return max + rightnum;
-        else return max;
+        int max_sum = INT32_MIN;
+        maxPathhelper(root, max_sum);
+        return max_sum;
     }
 };
 
