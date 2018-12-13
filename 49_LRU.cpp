@@ -62,6 +62,11 @@ private:
 };
 */
 
+static const auto _=[]{
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    return nullptr;
+}();
 class LRUCache {
 public:
     LRUCache(int capacity):cpcty(capacity) {}
@@ -72,41 +77,30 @@ public:
             return -1;
         }
         else{
-            pair<int,int> tmp = make_pair(key, it->second->second);
+            /*
+            pair<int, int> tmp = make_pair(key, it->second->second);
             l.erase(it->second);
-            l.push_back(tmp);
-            return tmp.second;
+            l.push_front(tmp);
+            */
+            l.splice(l.begin(), l, it->second);
+            return it->second->second;
         }
     }
 
     void put(int key, int value) {
-        if(get(key) != -1){
-            int del = l.back().first;
-            umap.erase(del);
+        auto it = umap.find(key);
+
+        if(it != umap.end()){
+            l.erase(it->second);
+        }
+
+        l.push_front(make_pair(key, value));
+        umap[key] = l.begin();
+        if((int)umap.size() > cpcty){
+            int del = l.rbegin()->first;
             l.pop_back();
-        }
-        if((int)l.size() == cpcty){
-            int del = l.front().first;
             umap.erase(del);
-
-            l.pop_front();
         }
-
-        l.push_back(make_pair(key, value));
-        for(auto it = l.begin(); it != l.end(); ++it){
-            if(it->first == key){
-                umap.insert(make_pair(key, it));
-                break;
-            }
-        }
-    }
-
-    void out_put()
-    {
-        for(auto e:l){
-            cout << e.first << ' ' << e.second << '|';
-        }
-        cout << endl;
     }
 
 private:
@@ -115,19 +109,14 @@ private:
     unordered_map<int, list<pair<int, int>>::iterator> umap;    
 };
 
-
 int main()
 {
     LRUCache cache(2);
     cache.put(2,1);
-    cache.out_put();
     cache.put(2,2);
-    cache.out_put();
     cout << cache.get(2) << endl;
     cache.put(1,1);
-    cache.out_put();
     cache.put(4,1);
-    cache.out_put();
     cout << cache.get(2) << endl;
     return 0;
 }
